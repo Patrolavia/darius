@@ -1,0 +1,11 @@
+{
+    "site_root": "https://ronmi.tw/pad/",
+    "front_end": "/srv/mdpad/frontend/build",
+    "port": "8000",
+    "db_type": "sqlite3",
+    //"db_type": "mysql",
+    "db_constr": ":memory:",
+    "redis_addr": ":6379",
+    "secret": "23489fhocbf9hfc@#nwgy2384rG$P#(u", // session secret
+    "store": "mdpad", // session store name
+}
