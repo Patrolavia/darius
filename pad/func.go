@@ -32,7 +32,6 @@ func html(title, content string) string {
 	return string(res)
 }
 
-
 // New creates a new record in db, it uses transaction so you have to pass db connection to it.
 func New(db *sql.DB, uid int, title, content string, tags []string, coops []int) (pad *PadContent, err error) {
 	tx, err := db.Begin()
@@ -89,11 +88,11 @@ func New(db *sql.DB, uid int, title, content string, tags []string, coops []int)
 func Load(id int) (pad *PadContent, err error) {
 	row := loadPadQuery.QueryRow(id)
 	var (
-		uid int
+		uid                  int
 		title, content, html string
-		version int
-		tags []string
-		coops []int
+		version              int
+		tags                 []string
+		coops                []int
 	)
 	if err = row.Scan(&uid, &title, &content, &html, &version); err != nil {
 		return
@@ -190,7 +189,7 @@ func (pad *PadContent) Save(db *sql.DB) (err error) {
 	}
 
 	tx.Commit()
-	pad.Version ++
+	pad.Version++
 	return
 }
 

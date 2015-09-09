@@ -9,8 +9,8 @@ func List() (ret []*Pad, err error) {
 
 	for rows.Next() {
 		var (
-			id int
-			uid int
+			id    int
+			uid   int
 			title string
 		)
 		if err = rows.Scan(&id, &uid, &title); err != nil {
