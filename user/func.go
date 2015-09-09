@@ -54,6 +54,17 @@ image TEXT)`
 	return
 }
 
+// InitMysql initializes table using mysql syntax.
+func InitMysql(db *sql.DB) error {
+	return initTable(db, "AUTO_INCREMENT")
+}
+
+// InitSqlite3 initializes table using sqlite syntax.
+func InitSqlite3(db *sql.DB) error {
+	return initTable(db, "AUTOINCREMENT")
+}
+
+// List all users.
 func List() (users []*User, err error) {
 	rows, err := listQuery.Query()
 	if err != nil {
