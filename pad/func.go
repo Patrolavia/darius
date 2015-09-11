@@ -2,6 +2,7 @@ package pad
 
 import (
 	"database/sql"
+	"sort"
 
 	bf "github.com/Ronmi/blackfriday"
 )
@@ -198,4 +199,14 @@ func (pad *Pad) Delete() (err error) {
 		pad.ID = 0
 	}
 	return
+}
+
+func (pad *Pad) CoopModified() bool {
+	a, b := pad.coopDiff()
+	return len(a) == 0 && len(b) == 0
+}
+
+func (pad *Pad) Sort() {
+	sort.Sort(sort.IntSlice(pad.Cooperators))
+	sort.Sort(sort.StringSlice(pad.Tags))
 }
