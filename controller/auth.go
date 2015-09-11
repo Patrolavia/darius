@@ -55,7 +55,7 @@ func (ac *Auth) GoogleCallback(w http.ResponseWriter, r *http.Request) {
 	}
 	tok, err := conf.Exchange(oauth2.NoContext, code)
 	if err != nil {
-		http.Redirect(w, r, "/index.html", http.StatusTemporaryRedirect)
+		http.Redirect(w, r, ac.Config.Url("/index.html"), http.StatusTemporaryRedirect)
 		return
 	}
 	client := conf.Client(oauth2.NoContext, tok)
@@ -63,7 +63,7 @@ func (ac *Auth) GoogleCallback(w http.ResponseWriter, r *http.Request) {
 	p, _ := plus.New(client)
 	me, err := p.People.Get("me").Do()
 	if err != nil {
-		http.Redirect(w, r, "/index.html", http.StatusTemporaryRedirect)
+		http.Redirect(w, r, ac.Config.Url("/index.html"), http.StatusTemporaryRedirect)
 		return
 	}
 
@@ -94,7 +94,7 @@ func (ac *Auth) GoogleCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "/index.html", http.StatusTemporaryRedirect)
+	http.Redirect(w, r, ac.Config.Url("/index.html"), http.StatusTemporaryRedirect)
 }
 
 func (ac *Auth) Paths(w http.ResponseWriter, r *http.Request) {
@@ -112,5 +112,5 @@ func (ac *Auth) Logout(w http.ResponseWriter, r *http.Request) {
 	if err := sess.Err(); err != nil {
 		log.Printf("While user logout: %s", err)
 	}
-	http.Redirect(w, r, "/index.html", http.StatusTemporaryRedirect)
+	http.Redirect(w, r, ac.Config.Url("/index.html"), http.StatusTemporaryRedirect)
 }
