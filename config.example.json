@@ -1,4 +1,4 @@
-{
+{ // golang json decoder does not recognize comments!
     "SiteRoot": "https://ronmi.tw/pad/",
     "FrontEnd": "/srv/mdpad/frontend/build",
     "Listen": ":8000",

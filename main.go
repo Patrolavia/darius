@@ -76,6 +76,9 @@ func main() {
 	http.HandleFunc("/api/delete/", pc.Delete)
 	http.HandleFunc("/api/edit/", pc.Edit)
 
+	sc := &controller.Static{Config: cfg}
+	http.HandleFunc("/", sc.File)
+
 	if err := http.ListenAndServe(cfg["Listen"], context.ClearHandler(http.DefaultServeMux)); err != nil {
 		log.Fatalf("Cannot start http server at %s: %s", cfg["Listen"], err)
 	}
