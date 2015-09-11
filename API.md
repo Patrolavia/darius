@@ -1,3 +1,7 @@
+# A word for frontend developer
+
+The `index.html` in frontend root folder is treated as a [go template](http://golang.org/pkg/text/template/#pkg-overview). The only variable you can use is *site root url*.
+
 # Basic knowledge
 
 ### Parameters
@@ -62,7 +66,7 @@ This api lists all pads without their content and html.
 - Entry: `/api/pad`
 - Parameters: padid (URI required)
 - Return: Array of pad info with content and html
-- Return type: `{"result": boolean, "message": "string", "data": [{"title": "string", "content": "string", "html": "string", "user": integer, "cooperator": [integer], "tags": ["string"], "version": integer, "id": integer}]}`
+- Return type: `{"result": boolean, "message": "string", "data": {"title": "string", "content": "string", "html": "string", "user": integer, "cooperator": [integer], "tags": ["string"], "version": integer, "id": integer}}`
 
 ### /api/edit - Edit pad
 
