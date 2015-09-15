@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Patrolavia/mdpadgo/pad"
+	"github.com/Patrolavia/mdpadgo/model"
 )
 
 func (pc *Pad) Create(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +32,7 @@ func (pc *Pad) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	p, err := pad.New(pc.DB, u.ID, data.Title, data.Content, data.Tags, data.Coops)
+	p, err := model.NewPad(pc.DB, u.ID, data.Title, data.Content, data.Tags, data.Coops)
 	if err != nil {
 		log.Printf("Failed creating pad: %s", err)
 		res.Err(2, "Database error").Do(w)
@@ -66,7 +66,7 @@ func (pc *Pad) Delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	p, err := pad.Load(pid)
+	p, err := model.LoadPad(pid)
 	if err != nil {
 		res.Err(2, "No such pad").Do(w)
 		return
@@ -106,7 +106,7 @@ func (pc *Pad) Edit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	p, err := pad.Load(pid)
+	p, err := model.LoadPad(pid)
 	if err != nil {
 		res.Err(2, "No such pad").Do(w)
 		return
@@ -151,7 +151,7 @@ func (pc *Pad) Edit(w http.ResponseWriter, r *http.Request) {
 	err = p.Save(pc.DB)
 	if err != nil {
 		switch v := err.(type) {
-		case pad.VersionError:
+		case model.VersionError:
 			res.Err(5, "Version mismatch").Do(w)
 		default:
 			log.Printf("Error saving pad#%d: %s", p.ID, v)

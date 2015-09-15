@@ -1,5 +1,4 @@
-// package user is user model
-package user
+package model
 
 // User record
 type User struct {

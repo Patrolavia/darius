@@ -1,4 +1,4 @@
-package pad
+package model
 
 import (
 	"database/sql"
@@ -34,7 +34,7 @@ func html(title, content string) string {
 }
 
 // New creates a new record in db, it uses transaction so you have to pass db connection to it.
-func New(db *sql.DB, uid int, title, content string, tags []string, coops []int) (pad *PadContent, err error) {
+func NewPad(db *sql.DB, uid int, title, content string, tags []string, coops []int) (pad *PadContent, err error) {
 	tx, err := db.Begin()
 	if err != nil {
 		return
@@ -86,7 +86,7 @@ func New(db *sql.DB, uid int, title, content string, tags []string, coops []int)
 }
 
 // Load record from db by id
-func Load(id int) (pad *PadContent, err error) {
+func LoadPad(id int) (pad *PadContent, err error) {
 	row := loadPadQuery.QueryRow(id)
 	var (
 		uid                  int

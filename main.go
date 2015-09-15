@@ -9,8 +9,7 @@ import (
 
 	"github.com/Patrolavia/mdpadgo/common"
 	"github.com/Patrolavia/mdpadgo/controller"
-	"github.com/Patrolavia/mdpadgo/pad"
-	"github.com/Patrolavia/mdpadgo/user"
+	"github.com/Patrolavia/mdpadgo/model"
 	"github.com/gorilla/context"
 	_ "github.com/mattn/go-sqlite3"
 	"golang.org/x/oauth2/google"
@@ -85,17 +84,11 @@ func main() {
 }
 
 func initDB(db *sql.DB, t string) (err error) {
-	u := user.InitSqlite3
-	p := pad.InitSqlite3
+	m := model.InitSqlite3
 
 	if t == "mysql" {
-		u = user.InitMysql
-		p = user.InitMysql
+		m = model.InitMysql
 	}
 
-	err = u(db)
-	if err == nil {
-		err = p(db)
-	}
-	return
+	return m(db)
 }

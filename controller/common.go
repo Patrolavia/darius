@@ -6,10 +6,10 @@ import (
 	"strings"
 
 	"github.com/Patrolavia/mdpadgo/common"
-	"github.com/Patrolavia/mdpadgo/user"
+	"github.com/Patrolavia/mdpadgo/model"
 )
 
-func Me(sess common.Session) (u *user.User, err error) {
+func Me(sess common.Session) (u *model.User, err error) {
 	uidStr := sess.Get("uid")
 	if err = sess.Err(); err != nil {
 		log.Printf("Failed to read session data: %s", err)
@@ -22,7 +22,7 @@ func Me(sess common.Session) (u *user.User, err error) {
 		return
 	}
 
-	if u, err = user.Load(uid); err != nil {
+	if u, err = model.LoadUser(uid); err != nil {
 		log.Printf("Failed to load user#%d from db: %s", uid, err)
 	}
 	return

@@ -1,4 +1,4 @@
-package pad
+package model
 
 func (pad *Pad) tagDiff() (newTags, goneTags []string) {
 	newTags = make([]string, 0, len(pad.Tags))

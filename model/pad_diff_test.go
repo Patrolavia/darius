@@ -1,4 +1,4 @@
-package pad
+package model
 
 import (
 	"reflect"

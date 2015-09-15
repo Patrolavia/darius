@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/Patrolavia/mdpadgo/common"
-	"github.com/Patrolavia/mdpadgo/user"
+	"github.com/Patrolavia/mdpadgo/model"
 	"golang.org/x/oauth2"
 	plus "google.golang.org/api/plus/v1"
 )
@@ -77,10 +77,10 @@ func (ac *Auth) GoogleCallback(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
-	u, err := user.Find(email)
+	u, err := model.FindUser(email)
 	if err != nil {
 		common.Errorf(err, "Faile to save user, trying create one for %s.", email)
-		u, err = user.New(me.DisplayName, email, me.Image.Url)
+		u, err = model.NewUser(me.DisplayName, email, me.Image.Url)
 		if err != nil {
 			common.Fatalf(w, err, "Failed to login, please try again later.")
 			return

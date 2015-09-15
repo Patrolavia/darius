@@ -1,50 +1,31 @@
-package user
+package model
 
 import (
-	"database/sql"
-	"log"
 	"reflect"
 	"testing"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var db *sql.DB
-
-func init() {
-	con, err := sql.Open("sqlite3", ":memory:")
-	if err != nil {
-		log.Fatalf("Cannot open test db: %s", err)
-	}
-	db = con
-	if err := initTable(db, "AUTOINCREMENT"); err != nil {
-		log.Fatalf("Cannot initialize user table: %s", err)
-	}
-}
-
-func TestNew(t *testing.T) {
-	u, err := New("test new", "new@test.com", "https://ronmi.tw/logo128.png")
+func TestNewUser(t *testing.T) {
+	u, err := NewUser("test new", "new@test.com", "https://ronmi.tw/logo128.png")
 	if err != nil {
 		t.Fatalf("Where creating new user: %s", err)
 	}
 
-	if u.ID != 1 {
-		t.Errorf("Expected user id starts from 1, got %d.", u.ID)
-	}
-
-	u, err = New("test new", "new@test.com", "https://ronmi.tw/logo128.png")
+	u, err = NewUser("test new", "new@test.com", "https://ronmi.tw/logo128.png")
 	if err == nil {
 		t.Errorf("Insert same data into db but nothing wrong? got new user id %d", u.ID)
 	}
 }
 
-func TestLoad(t *testing.T) {
-	expected, err := New("test load", "load@test.com", "https://ronmi.tw/logo128.png")
+func TestLoadUser(t *testing.T) {
+	expected, err := NewUser("test load", "load@test.com", "https://ronmi.tw/logo128.png")
 	if err != nil {
 		t.Fatalf("While creating user to be load: %s", err)
 	}
 
-	actual, err := Load(expected.ID)
+	actual, err := LoadUser(expected.ID)
 	if err != nil {
 		t.Fatalf("While loading just created user: %s", err)
 	}
@@ -54,13 +35,13 @@ func TestLoad(t *testing.T) {
 	}
 }
 
-func TestFind(t *testing.T) {
-	expected, err := New("test find", "find@test.com", "https://ronmi.tw/logo128.png")
+func TestFindUser(t *testing.T) {
+	expected, err := NewUser("test find", "find@test.com", "https://ronmi.tw/logo128.png")
 	if err != nil {
 		t.Fatalf("While creating user to be found: %s", err)
 	}
 
-	actual, err := Find(expected.Email)
+	actual, err := FindUser(expected.Email)
 	if err != nil {
 		t.Fatalf("While finding just created user: %s", err)
 	}
@@ -70,8 +51,8 @@ func TestFind(t *testing.T) {
 	}
 }
 
-func TestSave(t *testing.T) {
-	expected, err := New("test save", "save@test.com", "https://ronmi.tw/logo128.png")
+func TestSaveUser(t *testing.T) {
+	expected, err := NewUser("test save", "save@test.com", "https://ronmi.tw/logo128.png")
 	if err != nil {
 		t.Fatalf("While creating user to be saved: %s", err)
 	}
@@ -83,7 +64,7 @@ func TestSave(t *testing.T) {
 		t.Fatalf("While saving user %s: %s", expected.Email, err)
 	}
 
-	actual, err := Load(expected.ID)
+	actual, err := LoadUser(expected.ID)
 	if err != nil {
 		t.Fatalf("While loading saved user %d: %s", expected.ID, err)
 	}
@@ -99,13 +80,13 @@ func TestSave(t *testing.T) {
 	fn(actual.Image, expected.Image, "Image")
 }
 
-func TestList(t *testing.T) {
-	expected, err := New("test list", "list@test.com", "https://ronmi.tw/logo128.png")
+func TestListUser(t *testing.T) {
+	expected, err := NewUser("test list", "list@test.com", "https://ronmi.tw/logo128.png")
 	if err != nil {
 		t.Fatalf("While creating user to be listed: %s", err)
 	}
 
-	users, err := List()
+	users, err := ListUser()
 	if err != nil {
 		t.Fatalf("While listing users: %s", err)
 	}

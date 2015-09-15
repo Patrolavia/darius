@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/Patrolavia/mdpadgo/common"
-	"github.com/Patrolavia/mdpadgo/pad"
+	"github.com/Patrolavia/mdpadgo/model"
 )
 
 type Pad struct {
@@ -31,7 +31,7 @@ func (pc *Pad) View(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	p, err := pad.Load(pid)
+	p, err := model.LoadPad(pid)
 	if err != nil {
 		log.Printf("Cannot load pad#%d from db: %s", pid, err)
 		res.Failf("Cannot load pad#%d from database.", pid).Do(w)
@@ -44,7 +44,7 @@ func (pc *Pad) View(w http.ResponseWriter, r *http.Request) {
 
 func (pc *Pad) List(w http.ResponseWriter, r *http.Request) {
 	res := new(Response)
-	pads, err := pad.List()
+	pads, err := model.ListPad()
 	if err != nil {
 		log.Printf("Failed to load pad list: %s", err)
 		res.Fail("Database error").Do(w)

@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/Patrolavia/mdpadgo/common"
-	"github.com/Patrolavia/mdpadgo/user"
+	"github.com/Patrolavia/mdpadgo/model"
 )
 
 type User struct {
@@ -15,7 +15,7 @@ type User struct {
 
 func (uc *User) Users(w http.ResponseWriter, r *http.Request) {
 	res := new(Response)
-	userList, err := user.List()
+	userList, err := model.ListUser()
 	if err != nil {
 		log.Printf("/api/users: While loading user list from db: %s", err)
 		res.Fail("Cannot load user list").Do(w)

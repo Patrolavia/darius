@@ -1,4 +1,4 @@
-package pad
+package model
 
 import (
 	"database/sql"
@@ -6,7 +6,6 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/Patrolavia/mdpadgo/user"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -24,8 +23,8 @@ func (o *PadContent) equals(n *PadContent) (ret bool) {
 
 var (
 	db   *sql.DB
-	u    *user.User
-	coop *user.User
+	u    *User
+	coop *User
 )
 
 func init() {
@@ -34,24 +33,21 @@ func init() {
 		log.Fatalf("Error opening db connection: %s", err)
 	}
 	db = con
-	if err := user.InitSqlite3(db); err != nil {
-		log.Fatalf("Error preparing user package data: %s", err)
-	}
 	if err := InitSqlite3(db); err != nil {
-		log.Fatalf("Error preparing pad package data: %s", err)
+		log.Fatalf("Error preparing table and data: %s", err)
 	}
-	u, err = user.New("Test user", "user@test.com", "https://ronmi.tw/logo128.png")
+	u, err = NewUser("Test user", "user@test.com", "https://ronmi.tw/logo128.png")
 	if err != nil {
 		log.Fatalf("Error preparing test user: %s", err)
 	}
-	coop, err = user.New("Test coop", "coop@test.com", "https://ronmi.tw/logo128.png")
+	coop, err = NewUser("Test coop", "coop@test.com", "https://ronmi.tw/logo128.png")
 	if err != nil {
 		log.Fatalf("Error preparing test cooperator: %s", err)
 	}
 }
 
-func TestNew(t *testing.T) {
-	pad, err := New(db, u.ID, "title", "content", []string{"tag1", "tag2"}, []int{coop.ID})
+func TestNewPad(t *testing.T) {
+	pad, err := NewPad(db, u.ID, "title", "content", []string{"tag1", "tag2"}, []int{coop.ID})
 	if err != nil {
 		t.Fatalf("Error creating pad: %s", err)
 	}
@@ -78,12 +74,12 @@ func TestNew(t *testing.T) {
 }
 
 func TestLoad(t *testing.T) {
-	pad, err := New(db, u.ID, "load", "content", []string{"tag1", "tag2"}, []int{coop.ID})
+	pad, err := NewPad(db, u.ID, "load", "content", []string{"tag1", "tag2"}, []int{coop.ID})
 	if err != nil {
 		t.Fatalf("Error creating pad for later loading: %s", err)
 	}
 
-	actual, err := Load(pad.ID)
+	actual, err := LoadPad(pad.ID)
 	if err != nil {
 		t.Fatalf("Error loading just created pad#%d: %s", pad.ID, err)
 	}
@@ -93,7 +89,7 @@ func TestLoad(t *testing.T) {
 }
 
 func TestSave(t *testing.T) {
-	pad, err := New(db, u.ID, "save", "content", []string{"tag1", "tag2"}, []int{coop.ID})
+	pad, err := NewPad(db, u.ID, "save", "content", []string{"tag1", "tag2"}, []int{coop.ID})
 	if err != nil {
 		t.Fatalf("Error creating pad for later saving: %s", err)
 	}
@@ -103,7 +99,7 @@ func TestSave(t *testing.T) {
 		t.Fatalf("Cannot save modified title: %s", err)
 	}
 
-	actual, err := Load(pad.ID)
+	actual, err := LoadPad(pad.ID)
 	if err != nil {
 		t.Fatalf("Error loading after modifing title: %s", err)
 	}
@@ -116,7 +112,7 @@ func TestSave(t *testing.T) {
 	if err := pad.Save(db); err != nil {
 		t.Fatalf("Cannot save changed tag: %s", err)
 	}
-	actual, err = Load(pad.ID)
+	actual, err = LoadPad(pad.ID)
 	if err != nil {
 		t.Fatalf("Error loading after changing tag: %s", err)
 	}
@@ -129,7 +125,7 @@ func TestSave(t *testing.T) {
 	if err := pad.Save(db); err != nil {
 		t.Fatalf("Cannot save deleted tag: %s", err)
 	}
-	actual, err = Load(pad.ID)
+	actual, err = LoadPad(pad.ID)
 	if err != nil {
 		t.Fatalf("Error loading after deleting all tags: %s", err)
 	}
@@ -142,7 +138,7 @@ func TestSave(t *testing.T) {
 	if err := pad.Save(db); err != nil {
 		t.Fatalf("Cannot save inserted tag: %s", err)
 	}
-	actual, err = Load(pad.ID)
+	actual, err = LoadPad(pad.ID)
 	if err != nil {
 		t.Fatalf("Error loading after inserting tag: %s", err)
 	}

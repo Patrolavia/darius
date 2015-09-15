@@ -1,4 +1,4 @@
-package user
+package model
 
 import (
 	"database/sql"
@@ -14,7 +14,7 @@ var (
 	listQuery   *sql.Stmt
 )
 
-func initTable(db *sql.DB, ai string) (err error) {
+func initUserTable(db *sql.DB, ai string) (err error) {
 	query := `CREATE TABLE IF NOT EXISTS users (
 id INTEGER PRIMARY KEY %s,
 name VARCHAR(32),
@@ -56,16 +56,24 @@ image TEXT)`
 
 // InitMysql initializes table using mysql syntax.
 func InitMysql(db *sql.DB) error {
-	return initTable(db, "AUTO_INCREMENT")
+	err := initUserTable(db, "AUTO_INCREMENT")
+	if err == nil {
+		err = initPadTable(db, "AUTO_INCREMENT")
+	}
+	return err
 }
 
 // InitSqlite3 initializes table using sqlite syntax.
 func InitSqlite3(db *sql.DB) error {
-	return initTable(db, "AUTOINCREMENT")
+	err := initUserTable(db, "AUTOINCREMENT")
+	if err == nil {
+		err = initPadTable(db, "AUTOINCREMENT")
+	}
+	return err
 }
 
 // List all users.
-func List() (users []*User, err error) {
+func ListUser() (users []*User, err error) {
 	rows, err := listQuery.Query()
 	if err != nil {
 		return
@@ -87,7 +95,7 @@ func List() (users []*User, err error) {
 }
 
 // New inserts a new record into db.
-func New(name, email, image string) (u *User, err error) {
+func NewUser(name, email, image string) (u *User, err error) {
 	res, err := insertQuery.Exec(name, email, image)
 	if err != nil {
 		return
@@ -102,7 +110,7 @@ func New(name, email, image string) (u *User, err error) {
 }
 
 // Find a user from db by email.
-func Find(email string) (u *User, err error) {
+func FindUser(email string) (u *User, err error) {
 	row := emailQuery.QueryRow(email)
 	var (
 		id    int
@@ -118,7 +126,7 @@ func Find(email string) (u *User, err error) {
 }
 
 // Load user record from db by id.
-func Load(id int) (u *User, err error) {
+func LoadUser(id int) (u *User, err error) {
 	row := idQuery.QueryRow(id)
 	var (
 		name  string

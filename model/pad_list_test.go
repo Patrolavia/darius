@@ -1,4 +1,4 @@
-package pad
+package model
 
 import (
 	"reflect"
@@ -18,12 +18,12 @@ func (o *Pad) equals(n *Pad) (ret bool) {
 }
 
 func TestList(t *testing.T) {
-	pad, err := New(db, u.ID, "list", "content", []string{"tag1", "tag2"}, []int{coop.ID})
+	pad, err := NewPad(db, u.ID, "list", "content", []string{"tag1", "tag2"}, []int{coop.ID})
 	if err != nil {
 		t.Fatalf("Error creating pad: %s", err)
 	}
 
-	p, err := List()
+	p, err := ListPad()
 	if err != nil {
 		t.Fatalf("Error listing pads: %s", err)
 	}

@@ -1,6 +1,6 @@
-package pad
+package model
 
-func List() (ret []*Pad, err error) {
+func ListPad() (ret []*Pad, err error) {
 	data := make(map[int]*Pad)
 	rows, err := listPadQuery.Query()
 	if err != nil {

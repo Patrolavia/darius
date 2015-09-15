@@ -34,8 +34,8 @@ func (s Static) File(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s Static) index(w http.ResponseWriter) {
-	fn := s.Config["FrontEnd"] + "/index.html"
 	if s.cache == nil {
+		fn := s.Config["FrontEnd"] + "/index.html"
 		tmpl, err := template.ParseFiles(fn)
 		if err != nil {
 			log.Printf("Error parsing index.html: %s", err)

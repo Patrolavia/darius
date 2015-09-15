@@ -1,4 +1,4 @@
-package pad
+package model
 
 import (
 	"database/sql"
@@ -23,7 +23,7 @@ var (
 	findCoopQuery *sql.Stmt
 )
 
-func initTable(db *sql.DB, ai string) (err error) {
+func initPadTable(db *sql.DB, ai string) (err error) {
 	fn := func(query string) {
 		if err == nil {
 			_, err = db.Exec(query)
@@ -79,14 +79,4 @@ CONSTRAINT coop_pk PRIMARY KEY (uid, pid))`
 	findTagQuery = cn(`SELECT name FROM tags WHERE pid=?`)
 	findCoopQuery = cn(`SELECT uid FROM coops WHERE pid=?`)
 	return
-}
-
-// InitMysql initializes table using mysql syntax.
-func InitMysql(db *sql.DB) error {
-	return initTable(db, "AUTO_INCREMENT")
-}
-
-// InitSqlite3 initializes table using sqlite syntax.
-func InitSqlite3(db *sql.DB) error {
-	return initTable(db, "AUTOINCREMENT")
 }
