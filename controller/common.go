@@ -1,3 +1,5 @@
+// Package controller contains all controllers.
+// Test cases in this package are integral tests.
 package controller
 
 import (

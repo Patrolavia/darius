@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/Patrolavia/jsonapi"
 	"github.com/Patrolavia/mdpadgo/common"
 	"github.com/Patrolavia/mdpadgo/controller"
 	"github.com/Patrolavia/mdpadgo/model"
@@ -65,15 +66,15 @@ func main() {
 	http.HandleFunc("/api/logout", ac.Logout)
 
 	uc := &controller.User{sf, cfg}
-	http.HandleFunc("/api/user", uc.Me)
-	http.HandleFunc("/api/users", uc.Users)
+	jsonapi.HandlerFunc("/api/user", uc.Me)
+	jsonapi.HandlerFunc("/api/users", uc.Users)
 
 	pc := &controller.Pad{db, sf, cfg}
-	http.HandleFunc("/api/create", pc.Create)
-	http.HandleFunc("/api/pad/", pc.View)
-	http.HandleFunc("/api/pads", pc.List)
-	http.HandleFunc("/api/delete/", pc.Delete)
-	http.HandleFunc("/api/edit/", pc.Edit)
+	jsonapi.HandlerFunc("/api/create", pc.Create)
+	jsonapi.HandlerFunc("/api/pad/", pc.View)
+	jsonapi.HandlerFunc("/api/pads", pc.List)
+	jsonapi.HandlerFunc("/api/delete/", pc.Delete)
+	jsonapi.HandlerFunc("/api/edit/", pc.Edit)
 
 	sc := &controller.Static{Config: cfg}
 	http.HandleFunc("/", sc.File)

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"net/http"
 )
 
 type Response struct {
@@ -42,11 +41,9 @@ func (r *Response) Ok(data interface{}) *Response {
 	return r
 }
 
-func (r *Response) Do(w http.ResponseWriter) {
-	data, err := json.Marshal(r)
-	if err != nil {
+func (r *Response) Do(w *json.Encoder) {
+	if err := w.Encode(r); err != nil {
 		log.Printf("Response: While encoding json data: %s", err)
 		return
 	}
-	w.Write(data)
 }

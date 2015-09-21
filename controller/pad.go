@@ -2,10 +2,11 @@ package controller
 
 import (
 	"database/sql"
+	"encoding/json"
 	"log"
-	"net/http"
 	"strconv"
 
+	"github.com/Patrolavia/jsonapi"
 	"github.com/Patrolavia/mdpadgo/common"
 	"github.com/Patrolavia/mdpadgo/model"
 )
@@ -16,12 +17,13 @@ type Pad struct {
 	Config common.Config
 }
 
-func (pc *Pad) View(w http.ResponseWriter, r *http.Request) {
+func (pc *Pad) View(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
-	args := PathArg(r.URL.Path, "/api/pad/")
+	path := h.Request.URL.Path
+	args := PathArg(path, "/api/pad/")
 	if len(args) != 1 {
-		log.Printf("Invalid path for /pad/pad: %s, %#v", r.URL.Path, args)
-		res.Fail(r.URL.Path + " is invalid").Do(w)
+		log.Printf("Invalid path for /pad/pad: %s, %#v", path, args)
+		res.Fail(path + " is invalid").Do(w)
 		return
 	}
 
@@ -42,7 +44,7 @@ func (pc *Pad) View(w http.ResponseWriter, r *http.Request) {
 	res.Ok(p).Do(w)
 }
 
-func (pc *Pad) List(w http.ResponseWriter, r *http.Request) {
+func (pc *Pad) List(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
 	pads, err := model.ListPad()
 	if err != nil {

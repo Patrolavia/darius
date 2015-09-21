@@ -2,32 +2,24 @@ package controller
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"log"
-	"net/http"
 	"strconv"
 
+	"github.com/Patrolavia/jsonapi"
 	"github.com/Patrolavia/mdpadgo/model"
 )
 
-func (pc *Pad) Create(w http.ResponseWriter, r *http.Request) {
+func (pc *Pad) Create(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
-	u, err := Me(pc.SF.Get(r))
+	u, err := Me(pc.SF.Get(h.Request))
 	if err != nil {
 		res.Err(1, "Not logged in").Do(w)
 		return
 	}
 
-	rawData, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		log.Printf("Cannot read post data from /api/create: %s", err)
-		res.Err(2, "Data error").Do(w)
-		return
-	}
-
 	var data CreateRequest
-	if err := json.Unmarshal(rawData, &data); err != nil {
-		log.Printf("Failed to parse postdata [%s]: %s", string(rawData), err)
+	if err := r.Decode(&data); err != nil {
+		log.Printf("Failed to parse postdata: %s", err)
 		res.Err(2, "Data error").Do(w)
 		return
 	}
@@ -46,15 +38,15 @@ func (pc *Pad) Create(w http.ResponseWriter, r *http.Request) {
 	res.Ok(resData).Do(w)
 }
 
-func (pc *Pad) Delete(w http.ResponseWriter, r *http.Request) {
+func (pc *Pad) Delete(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
-	u, err := Me(pc.SF.Get(r))
+	u, err := Me(pc.SF.Get(h.Request))
 	if err != nil {
 		res.Err(1, "Not logged in").Do(w)
 		return
 	}
 
-	args := PathArg(r.URL.Path, "/api/delete/")
+	args := PathArg(h.Request.URL.Path, "/api/delete/")
 	if len(args) != 1 {
 		res.Err(2, "No such pad").Do(w)
 		return
@@ -86,15 +78,15 @@ func (pc *Pad) Delete(w http.ResponseWriter, r *http.Request) {
 	res.Ok(nil).Do(w)
 }
 
-func (pc *Pad) Edit(w http.ResponseWriter, r *http.Request) {
+func (pc *Pad) Edit(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
-	u, err := Me(pc.SF.Get(r))
+	u, err := Me(pc.SF.Get(h.Request))
 	if err != nil {
 		res.Err(1, "Not logged in").Do(w)
 		return
 	}
 
-	args := PathArg(r.URL.Path, "/api/edit/")
+	args := PathArg(h.Request.URL.Path, "/api/edit/")
 	if len(args) != 1 {
 		res.Err(2, "No such pad").Do(w)
 		return
@@ -131,14 +123,8 @@ func (pc *Pad) Edit(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	rawData, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		res.Err(4, "Data error").Do(w)
-		return
-	}
-
 	var data EditRequest
-	if err := json.Unmarshal(rawData, &data); err != nil {
+	if err := r.Decode(&data); err != nil {
 		res.Err(4, "Data error").Do(w)
 		return
 	}
