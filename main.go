@@ -67,7 +67,7 @@ func main() {
 
 	uc := &controller.User{sf, cfg}
 	jsonapi.HandleFunc("/api/me", uc.Me)
-	jsonapi.HandleFunc("/api/user", uc.User)
+	jsonapi.HandleFunc("/api/user/", uc.User)
 	jsonapi.HandleFunc("/api/users", uc.Users)
 
 	pc := &controller.Pad{db, sf, cfg}
