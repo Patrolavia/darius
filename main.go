@@ -66,16 +66,16 @@ func main() {
 	http.HandleFunc("/api/logout", ac.Logout)
 
 	uc := &controller.User{sf, cfg}
-	jsonapi.HandlerFunc("/api/me", uc.Me)
-	jsonapi.HandlerFunc("/api/user", uc.User)
-	jsonapi.HandlerFunc("/api/users", uc.Users)
+	jsonapi.HandleFunc("/api/me", uc.Me)
+	jsonapi.HandleFunc("/api/user", uc.User)
+	jsonapi.HandleFunc("/api/users", uc.Users)
 
 	pc := &controller.Pad{db, sf, cfg}
-	jsonapi.HandlerFunc("/api/create", pc.Create)
-	jsonapi.HandlerFunc("/api/pad/", pc.View)
-	jsonapi.HandlerFunc("/api/pads", pc.List)
-	jsonapi.HandlerFunc("/api/delete/", pc.Delete)
-	jsonapi.HandlerFunc("/api/edit/", pc.Edit)
+	jsonapi.HandleFunc("/api/create", pc.Create)
+	jsonapi.HandleFunc("/api/pad/", pc.View)
+	jsonapi.HandleFunc("/api/pads", pc.List)
+	jsonapi.HandleFunc("/api/delete/", pc.Delete)
+	jsonapi.HandleFunc("/api/edit/", pc.Edit)
 
 	sc := &controller.Static{Config: cfg}
 	http.HandleFunc("/", sc.File)
