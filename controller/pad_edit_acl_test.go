@@ -94,9 +94,9 @@ func TestPadEditAclCoop(t *testing.T) {
 		t.Fatalf("While loging in as coop: %s", err)
 	}
 	param := map[string]interface{}{
-		"title":      peAclPad.Title,
-		"content":    peAclPad.Title,
-		"tags":       peAclPad.Tags,
+		"title":   peAclPad.Title,
+		"content": peAclPad.Title,
+		"tags":    peAclPad.Tags,
 	}
 	resp, err := jsonapi.HandlerTest(pc().Edit).PostJSON(peAclUri, sess.Cookie(), param)
 	if err != nil {

@@ -185,11 +185,11 @@ func realTestEdit(t *testing.T, pid int, tags []string, coops []int, cookie stri
 	randomTitle := fmt.Sprintf("randomTitle-%d", rand.Int())
 	uri := fmt.Sprintf("/api/edit/%d", pad.ID)
 	param := map[string]interface{}{
-		"title": randomTitle,
-		"content": pad.Content,
-		"tags": tags,
+		"title":      randomTitle,
+		"content":    pad.Content,
+		"tags":       tags,
 		"cooperator": coops,
-		"version": pad.Version,
+		"version":    pad.Version,
 	}
 
 	resp, err := jsonapi.HandlerTest(pc().Edit).PostJSON(uri, cookie, param)
