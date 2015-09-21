@@ -1,12 +1,11 @@
-{ // golang json decoder does not recognize comments!
-    "SiteRoot": "https://ronmi.tw/pad/",
-    "FrontEnd": "/srv/mdpad/frontend/build",
+{
+    "SiteRoot": "http://pad.ro:8000/",
+    "FrontEnd": "frontend",
     "Listen": ":8000",
     "DBType": "sqlite3",
-    //"DBType": "mysql",
     "DBConStr": ":memory:",
     "RedisAddr": ":6379",
-    "SessSecret": "23489fhocbf9hfc@#nwgy2384rG$P#(u", // session secret
-    "SessName": "mdpad", // session name
-    //"GoogleKeyFile": "/srv/mdpad/google.key",
+    "SessSecret": "23489fhocbf9hfc@#nwgy2384rG$P#(u",
+    "SessName": "mdpad",
+    "GoogleKeyFile": "google.json",
 }
