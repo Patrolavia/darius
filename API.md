@@ -38,14 +38,23 @@ Scripts handling login process must first calling this API, then redirect user t
 
 After user login process is finished, user will be redirected back to index page, and you can call `/api/user`  to check if user is logged in.
 
-### /api/user - Get user info
+### /api/me - Get info of logged-in user
 
-- Entry: `/api/user`
+- Entry: `/api/me`
 - Return: User info object
 - Return type: `{"result": boolean, "message": "string", "data": {"name": "string", "image": "string", "id": integer}}`
 
 This API will return current logged in user's data.
 You have to check "result" first. if "result" is false, that means user has not logged in.
+
+### /api/user - Get user info
+
+- Entry: `/api/user`
+- Parameters: userid (URI required)
+- Return: User info object
+- Return type: `{"result": boolean, "message": "string", "data": {"name": "string", "image": "string", "id": integer}}`
+
+This API will return false in result field when something goes wrong.
 
 ### /api/users - Get all users info
 

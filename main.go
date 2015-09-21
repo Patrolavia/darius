@@ -66,7 +66,8 @@ func main() {
 	http.HandleFunc("/api/logout", ac.Logout)
 
 	uc := &controller.User{sf, cfg}
-	jsonapi.HandlerFunc("/api/user", uc.Me)
+	jsonapi.HandlerFunc("/api/me", uc.Me)
+	jsonapi.HandlerFunc("/api/user", uc.User)
 	jsonapi.HandlerFunc("/api/users", uc.Users)
 
 	pc := &controller.Pad{db, sf, cfg}

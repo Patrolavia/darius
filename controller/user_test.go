@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/Patrolavia/jsonapi"
@@ -13,9 +14,9 @@ func TestMe(t *testing.T) {
 		t.Fatalf("Cannot create user for testing me: %s", err)
 	}
 
-	resp, err := jsonapi.HandlerTest(uc().Me).Get("/api/user", "")
+	resp, err := jsonapi.HandlerTest(uc().Me).Get("/api/me", "")
 	if err != nil {
-		t.Fatalf("While getting response of /api/user (not logged in): %s", err)
+		t.Fatalf("While getting response of /api/me (not logged in): %s", err)
 	}
 
 	if !testResult(resp.Body, false) {
@@ -30,9 +31,9 @@ func TestMe(t *testing.T) {
 	}
 	cookie := sess.Cookie()
 
-	resp, err = jsonapi.HandlerTest(uc().Me).Get("/api/user", cookie)
+	resp, err = jsonapi.HandlerTest(uc().Me).Get("/api/me", cookie)
 	if err != nil {
-		t.Fatalf("While getting response of /api/user (not logged in): %s", err)
+		t.Fatalf("While getting response of /api/me (not logged in): %s", err)
 	}
 	if !testResult(resp.Body, true) {
 		t.Fatal("Cannot get login data")
@@ -56,5 +57,26 @@ func TestUserList(t *testing.T) {
 
 	if !testArrayHas(u.ID, resp.Body) {
 		t.Errorf("Cannot find user#%d in response of /api/users: %s", u.ID, resp.Body.String())
+	}
+}
+
+func TestUser(t *testing.T) {
+	u, err := model.NewUser("test user", "user@patrolavia.com", "https://patrolavia.com/logo128.png")
+	if err != nil {
+		t.Fatalf("Cannot create user for testing user: %s", err)
+	}
+	uri := fmt.Sprintf("/api/user/%d", u.ID)
+
+	resp, err := jsonapi.HandlerTest(uc().User).Get(uri, "")
+	if err != nil {
+		t.Fatalf("While getting response of /api/user: %s", err)
+	}
+
+	if !testResult(resp.Body, true) {
+		t.Errorf("Error occurs when fetching user info: %s", resp.Body.String())
+	}
+
+	if !testData(u.ID, resp.Body, "id") {
+		t.Errorf("fetched user id differs with saved one: %s", resp.Body.String())
 	}
 }
