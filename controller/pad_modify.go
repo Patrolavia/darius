@@ -4,16 +4,36 @@ import (
 	"encoding/json"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/Patrolavia/jsonapi"
+	"github.com/Patrolavia/mdpadgo/common"
 	"github.com/Patrolavia/mdpadgo/model"
 )
+
+func validEditor(cfg common.Config, u *model.User) bool {
+	if cfg["ValidEditors"] == "" {
+		return true
+	}
+	editors := strings.Split(cfg["ValidEditors"], ",")
+	for _, v := range editors {
+		if u.Email == v {
+			return true
+		}
+	}
+	return false
+}
 
 func (pc *Pad) Create(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
 	u, err := Me(pc.SF.Get(h.Request))
 	if err != nil {
 		res.Err(1, "Not logged in").Do(w)
+		return
+	}
+
+	if !validEditor(pc.Config, u) {
+		res.Err(1, "Not valid editor").Do(w)
 		return
 	}
 

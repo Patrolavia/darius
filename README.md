@@ -1,6 +1,6 @@
 # mdpadgo
 
-A simple server to hold your markdown documents.
+A simple server to hold markdown documents for your small company or personal use.
 
 ## Synopsis
 
@@ -9,6 +9,19 @@ A simple server to hold your markdown documents.
 * `mdpadgo config.json`
 
 API specification see [API.md](https://github.com/Patrolavia/mdpadgo/blob/master/API.md).
+
+## Configuration
+
+* SiteRoot: Site root url with tailing slash. eg: `http://example.com:12345/my/pad/`.
+* FrontEnd: Local path you put frontend files. eg: `../frontend` or `/srv/mdpad/frontend/build`
+* Listen: Parameter pass to [http.ListenAndServe](http://golang.org/pkg/net/http/#ListenAndServe). The address and port to bind.
+* DBType: Database driver, can be `sqlite3` or `mysql`.
+* DBConStr: DB connection string, varies according to `DBType`.
+* RedisAddr: Redis server connection string.
+* SessSecret: SALT for session, type some random string here.
+* SessName: Session name prefix.
+* GoogleKeyFile: Where to find your google OAuth credential. This file must be in json format, which can be downloaded from Google Developer Console.
+* ValidEditor: Emails of valid pad creators, comma-separated. eg: `a@example.com,b@example.com`. Leave blank if everyone can create pad.
 
 ## For frontend developers
 
