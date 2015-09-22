@@ -194,6 +194,10 @@ func (pad *PadContent) Save(db *sql.DB) (err error) {
 	return
 }
 
+func (pad *PadContent) Render() {
+	pad.HTML = html(pad.Title, pad.Content)
+}
+
 func (pad *Pad) Delete() (err error) {
 	if _, err = deletePadQuery.Exec(pad.ID); err == nil {
 		pad.ID = 0

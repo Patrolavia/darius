@@ -59,6 +59,9 @@ func main() {
 		log.Fatalf("Cannot prepare google login info: %s", err)
 	}
 
+	whale := &controller.Whale{sf}
+	jsonapi.HandleFunc("/api/whale", whale.Whale)
+
 	ac := &controller.Auth{googleConfig, sf, cfg}
 	http.HandleFunc("/auth/google", ac.Google)
 	http.HandleFunc("/auth/google/oauth2callback", ac.GoogleCallback)
