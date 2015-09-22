@@ -46,7 +46,7 @@ func TestValidEditor(t *testing.T) {
 		t.Errorf("api call should fail when invalid editor tries to create pad: %s", resp.Body.String())
 	}
 
-	if !testData(1, resp.Body, "code") {
+	if !testData(3, resp.Body, "code") {
 		t.Errorf("api call should return errcode 1 when invalid editor tries to create pad: %s", resp.Body.String())
 	}
 

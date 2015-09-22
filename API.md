@@ -114,6 +114,7 @@ Result code:
 - 0: Success, pad id is return via `id` field.
 - 1: Not logged in.
 - 2: Failed to save into database.
+- 3: Not permit to create pad.
 
 ### /api/delete - Delete pad
 - Entry: `/api/delete`

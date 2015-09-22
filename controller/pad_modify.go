@@ -33,7 +33,7 @@ func (pc *Pad) Create(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	}
 
 	if !validEditor(pc.Config, u) {
-		res.Err(1, "Not valid editor").Do(w)
+		res.Err(3, "Not valid editor").Do(w)
 		return
 	}
 
