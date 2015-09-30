@@ -50,11 +50,13 @@ You have to check "result" first. if "result" is false, that means user has not 
 ### /api/user - Get user info
 
 - Entry: `/api/user`
-- Parameters: userid (URI required)
+- Parameters: userid (json required)
 - Return: User info object
-- Return type: `{"result": boolean, "message": "string", "data": {"name": "string", "image": "string", "id": integer}}`
+- Return type: `{"result": boolean, "message": "string", "data": [{"name": "string", "image": "string", "id": integer}]}`
 
-This API will return false in result field when something goes wrong.
+The `userid` parameter is an array of integers.
+
+This API will return false in result field when something goes wrong. If users are not found, result will be true, and data will be an empty array.
 
 ### /api/users - Get all users info
 

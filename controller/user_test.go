@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/Patrolavia/jsonapi"
@@ -65,9 +64,11 @@ func TestUser(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Cannot create user for testing user: %s", err)
 	}
-	uri := fmt.Sprintf("/api/user/%d", u.ID)
+	param := map[string]interface{}{
+		"userid": []int{u.ID},
+	}
 
-	resp, err := jsonapi.HandlerTest(uc().User).Get(uri, "")
+	resp, err := jsonapi.HandlerTest(uc().User).PostJSON("/api/user", "", param)
 	if err != nil {
 		t.Fatalf("While getting response of /api/user: %s", err)
 	}
@@ -76,7 +77,7 @@ func TestUser(t *testing.T) {
 		t.Errorf("Error occurs when fetching user info: %s", resp.Body.String())
 	}
 
-	if !testData(u.ID, resp.Body, "id") {
-		t.Errorf("fetched user id differs with saved one: %s", resp.Body.String())
+	if !testArrayHas(u.ID, resp.Body) {
+		t.Errorf("Did not fetch what we want: %s", resp.Body.String())
 	}
 }

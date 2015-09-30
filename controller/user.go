@@ -3,7 +3,6 @@ package controller
 import (
 	"encoding/json"
 	"log"
-	"strconv"
 
 	"github.com/Patrolavia/jsonapi"
 	"github.com/Patrolavia/mdpadgo/common"
@@ -40,23 +39,33 @@ func (uc *User) Me(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 
 func (uc *User) User(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
-	args := PathArg(h.Request.URL.Path, "/api/user/")
-	if len(args) != 1 {
-		res.Fail("No such user").Do(w)
+	var args map[string]interface{}
+	if err := r.Decode(&args); err != nil {
+		res.Fail("Arguments not in JSON format.")
 		return
 	}
 
-	uid, err := strconv.Atoi(args[0])
-	if err != nil {
-		res.Fail("No such user").Do(w)
+	ids, ok := args["userid"]
+	if !ok {
+		res.Fail("No user id passed.").Do(w)
 		return
 	}
 
-	u, err := model.LoadUser(uid)
-	if err != nil {
-		log.Printf("Error loading user from db: %s", err)
-		res.Fail("Error loading user from db").Do(w)
+	uids, ok := ids.([]interface{})
+	if !ok || len(uids) < 1 {
+		res.Fail("No user id passed.").Do(w)
 		return
 	}
-	res.Ok(u).Do(w)
+
+	ret := make([]*model.User, 0, len(uids))
+	for _, uid := range uids {
+		u, err := model.LoadUser(int(uid.(float64))) // json numbers converts to float64 in go
+		if err != nil {
+			log.Printf("Error loading user from db: %s", err)
+			res.Fail("Error loading user from db").Do(w)
+			return
+		}
+		ret = append(ret, u)
+	}
+	res.Ok(ret).Do(w)
 }
