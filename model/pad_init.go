@@ -14,7 +14,9 @@ var (
 	loadPadQuery,
 	deletePadQuery,
 	deleteTagQuery,
+	deletePadTagQuery,
 	deleteCoopQuery,
+	deletePadCoopQuery,
 	updatePadQuery,
 	listPadQuery,
 	listTagQuery,
@@ -71,7 +73,9 @@ CONSTRAINT coop_pk PRIMARY KEY (uid, pid))`
 	loadPadQuery = cn(`SELECT uid,title,content,html,version FROM pads WHERE id=?`)
 	deletePadQuery = cn(`DELETE FROM pads WHERE id=?`)
 	deleteTagQuery = cn(`DELETE FROM tags WHERE name=? AND pid=?`)
+	deletePadTagQuery = cn(`DELETE FROM tags WHERE pid=?`)
 	deleteCoopQuery = cn(`DELETE FROM coops WHERE uid=? AND pid=?`)
+	deletePadCoopQuery = cn(`DELETE FROM coops WHERE pid=?`)
 	updatePadQuery = cn(`UPDATE pads SET title=?,content=?,html=?,version=version+1 WHERE id=? AND version=?`)
 	listPadQuery = cn(`SELECT id,uid,title FROM pads`)
 	listTagQuery = cn(`SELECT name,pid FROM tags`)

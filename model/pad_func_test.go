@@ -146,3 +146,48 @@ func TestSave(t *testing.T) {
 		t.Errorf("Does not load right data after inserting tag: %#v", actual.Pad)
 	}
 }
+
+func TestDelete(t *testing.T) {
+	pad, err := NewPad(db, u.ID, "del", "content", []string{"tag1", "tag2"}, []int{coop.ID})
+	if err != nil {
+		t.Fatalf("Error creating pad for later deleting: %s", err)
+	}
+	pid := pad.ID
+	if err := pad.Delete(db); err != nil {
+		t.Fatalf("Error deleting pad: %s", err)
+	}
+	if pad.ID != 0 {
+		t.Errorf("Not setting ID to zero after deleting")
+	}
+
+	pad, err = LoadPad(pid)
+	if err == nil {
+		t.Errorf("Loaded just deleted pad#%d: %v", pid, pad)
+	}
+
+	// test if we deleted tags
+	rows, err := findTagQuery.Query(pid)
+	if err != nil {
+		t.Fatalf("Error querying db for tags: %s", err);
+	}
+	cnt := 0
+	for rows.Next() {
+		cnt++
+	}
+	if cnt > 0 {
+		t.Errorf("Tags should be deleted together with pad, but we got %d tags still.", cnt)
+	}
+
+	// test if we deleted coops
+	rows, err = findCoopQuery.Query(pid)
+	if err != nil {
+		t.Fatalf("Error querying db for coops: %s", err);
+	}
+	cnt = 0
+	for rows.Next() {
+		cnt++
+	}
+	if cnt > 0 {
+		t.Errorf("Coops should be deleted together with pad, but we got %d coops still.", cnt)
+	}
+}

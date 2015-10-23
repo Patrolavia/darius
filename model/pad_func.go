@@ -198,10 +198,32 @@ func (pad *PadContent) Render() {
 	pad.HTML = html(pad.Title, pad.Content)
 }
 
-func (pad *Pad) Delete() (err error) {
-	if _, err = deletePadQuery.Exec(pad.ID); err == nil {
-		pad.ID = 0
+func (pad *Pad) Delete(db *sql.DB) (err error) {
+	tx, err := db.Begin()
+	if err != nil {
+		return
 	}
+	defer tx.Rollback()
+
+	// delete tags
+	delTag := tx.Stmt(deletePadTagQuery)
+	if _, err = delTag.Exec(pad.ID); err != nil {
+		return
+	}
+
+	// delete coops
+	delCoop := tx.Stmt(deletePadCoopQuery)
+	if _, err = delCoop.Exec(pad.ID); err != nil {
+		return
+	}
+
+	// delete pad
+	delPad := tx.Stmt(deletePadQuery)
+	if _, err = delPad.Exec(pad.ID); err == nil {
+		pad.ID = 0
+		tx.Commit()
+	}
+
 	return
 }
 

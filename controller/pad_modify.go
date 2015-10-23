@@ -89,7 +89,7 @@ func (pc *Pad) Delete(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 		return
 	}
 
-	if err := p.Delete(); err != nil {
+	if err := p.Delete(pc.DB); err != nil {
 		log.Printf("Cannot delete pad#%d: %s", p.ID, err)
 		res.Err(4, "Cannot delete from database").Do(w)
 		return
