@@ -1,5 +1,7 @@
 # mdpadgo
 
+[![Build Status](https://travis-ci.org/Patrolavia/mdpadgo.svg?branch=master)](https://travis-ci.org/Patrolavia/mdpadgo)
+
 A simple server to hold markdown documents for your small company or personal use.
 
 ## Synopsis
