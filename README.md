@@ -1,16 +1,18 @@
-# mdpadgo
+# Darius - MDPAD backend
 
-[![Build Status](https://travis-ci.org/Patrolavia/mdpadgo.svg?branch=master)](https://travis-ci.org/Patrolavia/mdpadgo)
+Darius is part of MDPAD project.
+
+[![Build Status](https://travis-ci.org/Patrolavia/darius.svg?branch=master)](https://travis-ci.org/Patrolavia/darius)
 
 A simple server to hold markdown documents for your small company or personal use.
 
 ## Synopsis
 
-* Build from source or down binary.
-* Create [config.json](https://github.com/Patrolavia/mdpadgo/blob/master/config.example.json).
-* `mdpadgo config.json`
+* Download binary or `go get github.com/Patrolavia/darius`.
+* Create [config.json](https://github.com/Patrolavia/darius/blob/master/config.example.json).
+* `darius config.json`
 
-API specification see [API.md](https://github.com/Patrolavia/mdpadgo/blob/master/API.md).
+API specification see [API.md](https://github.com/Patrolavia/darius/blob/master/API.md).
 
 ## Configuration
 
@@ -25,20 +27,9 @@ API specification see [API.md](https://github.com/Patrolavia/mdpadgo/blob/master
 * GoogleKeyFile: Where to find your google OAuth credential. This file must be in json format, which can be downloaded from Google Developer Console.
 * ValidEditor: Emails of valid pad creators, comma-separated. eg: `a@example.com,b@example.com`. Leave blank if everyone can create pad.
 
-## For frontend developers
+## Darius?
 
-You can run a local mdpad server in few steps.
-
-1. Copy `config.example.json` to `config.json`.
-2. Add a fake record in your hosts file. Normally, it is placed in `/etc/hosts` in linux, `C:\Windows\system32\drivers\etc\hosts` in windows. This record have to have a valid TLD like `.com`, `.org`, `.cc`... etc. Point this record (`example.com` for example) to `127.0.0.1`.
-3. Obtain OAuth 2.0 credentials from the Google Developers Console. Specify callback url to someting like `http://example.com:8000/auth/google/oauth2callback`. Save you credential (json format) to `google.json`.
-4. Edit `config.json`, change `SiteRoot` to something like `http://example.com:8000/` (remember the tailing slash), and change `FrontEnd` to the path cantains your frontend file.
-5. Install ad start a redis server.
-6. Build (`go build`) and run the server (`./mdpadgo config.json` in linux, `mdpadgo.exe config.json` in windows).
-
-By these steps, server will put data in memory, so every time you restart it will also cleanup you data. Change `DBConStr` to `data.db` if you want to persist your testing data.
-
-Session data are placed in redis server, and it will not be cleared when restarting mdpadgo server. You may need to delete cookies to reset current session.
+Darius is a blue whale. He is 17 years old, lives in Antarctic Ocean and travels to Southern Atlantic Ocean every winter.
 
 ## License
 
