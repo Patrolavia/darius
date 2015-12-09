@@ -8,9 +8,9 @@ import (
 	"os"
 
 	"github.com/Patrolavia/jsonapi"
-	"github.com/Patrolavia/mdpadgo/common"
-	"github.com/Patrolavia/mdpadgo/controller"
-	"github.com/Patrolavia/mdpadgo/model"
+	"github.com/Patrolavia/darius/common"
+	"github.com/Patrolavia/darius/controller"
+	"github.com/Patrolavia/darius/model"
 	"github.com/gorilla/context"
 	_ "github.com/mattn/go-sqlite3"
 	"golang.org/x/oauth2/google"

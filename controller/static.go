@@ -6,7 +6,7 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/Patrolavia/mdpadgo/common"
+	"github.com/Patrolavia/darius/common"
 )
 
 // Static serves static file.

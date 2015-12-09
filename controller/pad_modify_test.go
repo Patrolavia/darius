@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/Patrolavia/jsonapi"
-	"github.com/Patrolavia/mdpadgo/model"
+	"github.com/Patrolavia/darius/model"
 )
 
 var pmTestUser *model.User

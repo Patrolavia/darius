@@ -12,8 +12,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Patrolavia/mdpadgo/common"
-	"github.com/Patrolavia/mdpadgo/model"
+	"github.com/Patrolavia/darius/common"
+	"github.com/Patrolavia/darius/model"
 	_ "github.com/mattn/go-sqlite3"
 )
 

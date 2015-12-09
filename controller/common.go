@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Patrolavia/mdpadgo/common"
-	"github.com/Patrolavia/mdpadgo/model"
+	"github.com/Patrolavia/darius/common"
+	"github.com/Patrolavia/darius/model"
 )
 
 func Me(sess common.Session) (u *model.User, err error) {

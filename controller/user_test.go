@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/Patrolavia/jsonapi"
-	"github.com/Patrolavia/mdpadgo/model"
+	"github.com/Patrolavia/darius/model"
 )
 
 func TestMe(t *testing.T) {

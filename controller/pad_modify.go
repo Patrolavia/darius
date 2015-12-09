@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/Patrolavia/jsonapi"
-	"github.com/Patrolavia/mdpadgo/common"
-	"github.com/Patrolavia/mdpadgo/model"
+	"github.com/Patrolavia/darius/common"
+	"github.com/Patrolavia/darius/model"
 )
 
 func validEditor(cfg common.Config, u *model.User) bool {

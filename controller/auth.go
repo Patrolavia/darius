@@ -6,8 +6,8 @@ import (
 	"math/rand"
 	"net/http"
 
-	"github.com/Patrolavia/mdpadgo/common"
-	"github.com/Patrolavia/mdpadgo/model"
+	"github.com/Patrolavia/darius/common"
+	"github.com/Patrolavia/darius/model"
 	"golang.org/x/oauth2"
 	plus "google.golang.org/api/plus/v1"
 )

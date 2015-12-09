@@ -6,8 +6,8 @@ import (
 	"os/exec"
 
 	"github.com/Patrolavia/jsonapi"
-	"github.com/Patrolavia/mdpadgo/common"
-	"github.com/Patrolavia/mdpadgo/model"
+	"github.com/Patrolavia/darius/common"
+	"github.com/Patrolavia/darius/model"
 )
 
 type Whale struct {
