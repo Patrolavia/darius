@@ -81,7 +81,7 @@ func (s *sess) Get(key string) (value string) {
 	case fmt.Stringer:
 		value = v.String()
 	default:
-		s.err = fmt.Errorf("The value of %s in session store is %T, not a string", key, key)
+		s.err = fmt.Errorf("The value of %s in session store is %T, not a string", key, v)
 	}
 	return
 }
