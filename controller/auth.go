@@ -55,6 +55,7 @@ func (ac *Auth) GoogleCallback(w http.ResponseWriter, r *http.Request) {
 	}
 	tok, err := conf.Exchange(oauth2.NoContext, code)
 	if err != nil {
+		common.Errorf(err, "Error occurs when exchanging token")
 		http.Redirect(w, r, ac.Config.Url("/"), http.StatusTemporaryRedirect)
 		return
 	}
@@ -63,6 +64,7 @@ func (ac *Auth) GoogleCallback(w http.ResponseWriter, r *http.Request) {
 	p, _ := plus.New(client)
 	me, err := p.People.Get("me").Do()
 	if err != nil {
+		common.Errorf(err, "Error occurs when getting user info")
 		http.Redirect(w, r, ac.Config.Url("/"), http.StatusTemporaryRedirect)
 		return
 	}
