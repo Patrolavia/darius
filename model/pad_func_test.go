@@ -168,7 +168,7 @@ func TestDelete(t *testing.T) {
 	// test if we deleted tags
 	rows, err := findTagQuery.Query(pid)
 	if err != nil {
-		t.Fatalf("Error querying db for tags: %s", err);
+		t.Fatalf("Error querying db for tags: %s", err)
 	}
 	cnt := 0
 	for rows.Next() {
@@ -181,7 +181,7 @@ func TestDelete(t *testing.T) {
 	// test if we deleted coops
 	rows, err = findCoopQuery.Query(pid)
 	if err != nil {
-		t.Fatalf("Error querying db for coops: %s", err);
+		t.Fatalf("Error querying db for coops: %s", err)
 	}
 	cnt = 0
 	for rows.Next() {

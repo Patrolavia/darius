@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/Patrolavia/jsonapi"
 	"github.com/Patrolavia/darius/common"
 	"github.com/Patrolavia/darius/controller"
 	"github.com/Patrolavia/darius/model"
+	"github.com/Patrolavia/jsonapi"
 	"github.com/gorilla/context"
 	_ "github.com/mattn/go-sqlite3"
 	"golang.org/x/oauth2/google"

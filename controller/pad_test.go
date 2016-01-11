@@ -5,8 +5,8 @@ import (
 	"log"
 	"testing"
 
-	"github.com/Patrolavia/jsonapi"
 	"github.com/Patrolavia/darius/model"
+	"github.com/Patrolavia/jsonapi"
 )
 
 var padTestUser *model.User

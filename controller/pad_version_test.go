@@ -6,8 +6,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/Patrolavia/jsonapi"
 	"github.com/Patrolavia/darius/model"
+	"github.com/Patrolavia/jsonapi"
 )
 
 var pvTestUser *model.User

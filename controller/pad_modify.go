@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Patrolavia/jsonapi"
 	"github.com/Patrolavia/darius/common"
 	"github.com/Patrolavia/darius/model"
+	"github.com/Patrolavia/jsonapi"
 )
 
 func validEditor(cfg common.Config, u *model.User) bool {

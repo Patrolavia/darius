@@ -6,9 +6,9 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/Patrolavia/jsonapi"
 	"github.com/Patrolavia/darius/common"
 	"github.com/Patrolavia/darius/model"
+	"github.com/Patrolavia/jsonapi"
 )
 
 type Pad struct {

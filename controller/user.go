@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"log"
 
-	"github.com/Patrolavia/jsonapi"
 	"github.com/Patrolavia/darius/common"
 	"github.com/Patrolavia/darius/model"
+	"github.com/Patrolavia/jsonapi"
 )
 
 type User struct {
