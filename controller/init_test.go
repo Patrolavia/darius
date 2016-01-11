@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"reflect"
 	"strings"
 	"testing"
@@ -41,8 +42,13 @@ func init() {
 		log.Fatalf("Cannot init table scheme: %s", err)
 	}
 
+	redis := os.Getenv("REDIS")
+	if redis == "" {
+		log.Fatalf("Please set environment variable REDIS.")
+	}
+
 	cfg = map[string]string{
-		"RedisAddr":  ":6379",
+		"RedisAddr":  redis,
 		"SessSecret": "1234567890",
 		"SessName":   "mdpadtest",
 	}
