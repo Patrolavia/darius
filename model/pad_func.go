@@ -229,7 +229,7 @@ func (pad *Pad) Delete(db *sql.DB) (err error) {
 
 func (pad *Pad) CoopModified() bool {
 	a, b := pad.coopDiff()
-	return len(a) == 0 && len(b) == 0
+	return len(a) != 0 || len(b) != 0
 }
 
 func (pad *Pad) Sort() {

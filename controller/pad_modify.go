@@ -125,10 +125,6 @@ func (pc *Pad) Edit(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	}
 
 	if p.UID != u.ID {
-		if p.CoopModified() {
-			res.Err(3, "Not owner").Do(w)
-			return
-		}
 		var isCoop bool
 		for _, c := range p.Cooperators {
 			if c == u.ID {
@@ -154,6 +150,12 @@ func (pc *Pad) Edit(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	p.Tags = data.Tags
 	p.Cooperators = data.Coops
 	p.Version = data.Version
+
+	if p.UID != u.ID && p.CoopModified() {
+		res.Err(3, "Not owner").Do(w)
+		return
+	}
+
 	err = p.Save(pc.DB)
 	if err != nil {
 		switch v := err.(type) {
