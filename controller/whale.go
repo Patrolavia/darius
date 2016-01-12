@@ -2,7 +2,6 @@ package controller
 
 import (
 	"encoding/json"
-	"net/http"
 	"os/exec"
 
 	"github.com/Patrolavia/darius/common"
@@ -15,26 +14,22 @@ type Whale struct {
 }
 
 func (c *Whale) Whale(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
-	u, err := Me(c.SF.Get(h.Request))
-	if err != nil {
-		http.Error(h.ResponseWriter, "Not found", 404)
-		return
-	}
-
 	res := new(Response)
 	p := &model.PadContent{
 		Pad: &model.Pad{
-			UID:         u.ID,
-			Title:       "Whale not found",
+			Title:       "Not found",
 			Tags:        []string{},
 			Cooperators: []int{},
 		},
-		Content: "# We don't have secret whalepower.",
+		Content: `# What?
+Even a wise whale like Darius cannot understand your request.
+
+ He don't have secret whale power.`,
 	}
 
 	cmd := exec.Command("fortune")
 	if msg, err := cmd.Output(); err == nil {
-		p.Title = "Wise words from whale"
+		p.Title = "Wise words from Darius the whale"
 		p.Content = "```\n" + string(msg) + "\n```"
 	}
 
