@@ -24,7 +24,7 @@ func (c *Whale) Whale(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 		Content: `# What?
 Even a wise whale like Darius cannot understand your request.
 
- He don't have secret whale power.`,
+He don't have secret whale power.`,
 	}
 
 	cmd := exec.Command("fortune")
