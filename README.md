@@ -30,7 +30,3 @@ API specification see [API.md](https://github.com/Patrolavia/darius/blob/master/
 ## Darius?
 
 Darius is a blue whale. He is 17 years old, lives in Antarctic Ocean and travels to Southern Atlantic Ocean every winter.
-
-## License
-
-Any version of MIT, GPL or LGPL.

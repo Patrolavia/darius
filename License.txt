@@ -1,0 +1,18 @@
+Copyright 2015, 2016 Ronmi Ren <ronmi@patrolavia.com>
+
+Darius is free software: it is distributed in the hope that it
+will be useful, but WITHOUT ANY WARRANTY; without even the
+implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE.
+
+Darius is released under protection of GPL, LGPL and MIT license.
+You can choose one of them (any elder or later version at your
+option), and redistribute/modify it under the terms of the
+license. You MUST EXPLICITLY choose one. If not, you will be
+assumed redistributing/modifying Darius under terms of GPLv3.
+
+For detailed info of GPL, LGPL and MIT license, visit
+
+* http://www.gnu.org/licenses/licenses.html#GPL
+* http://www.gnu.org/licenses/licenses.html#LGPL
+* https://en.wikipedia.org/wiki/MIT_License

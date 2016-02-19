@@ -1,3 +1,5 @@
+// This file is part of Darius. See License.txt for license information.
+
 // Package controller contains all controllers.
 // Test cases in this package are integral tests.
 package controller

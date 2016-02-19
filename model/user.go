@@ -1,3 +1,5 @@
+// This file is part of Darius. See License.txt for license information.
+
 package model
 
 // User record
