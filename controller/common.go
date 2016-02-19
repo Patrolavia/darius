@@ -11,6 +11,7 @@ import (
 	"github.com/Patrolavia/darius/model"
 )
 
+// Me returns current user info to user
 func Me(sess common.Session) (u *model.User, err error) {
 	uidStr := sess.Get("uid")
 	if err = sess.Err(); err != nil {
@@ -30,6 +31,7 @@ func Me(sess common.Session) (u *model.User, err error) {
 	return
 }
 
+// PathArg parses url for url parameters
 func PathArg(url, base string) (args []string) {
 	if url[:len(base)] != base {
 		return
@@ -38,6 +40,7 @@ func PathArg(url, base string) (args []string) {
 	return strings.Split(url, "/")
 }
 
+// CreateRequest represents a request to create pad
 type CreateRequest struct {
 	Title   string   `json:"title"`
 	Content string   `json:"content"`
@@ -45,6 +48,7 @@ type CreateRequest struct {
 	Tags    []string `json:"tags"`
 }
 
+// EditRequest represents a request to edit pad
 type EditRequest struct {
 	*CreateRequest
 	Version int `json:"version"`

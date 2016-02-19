@@ -72,7 +72,7 @@ func InitSqlite3(db *sql.DB) error {
 	return err
 }
 
-// List all users.
+// ListUSer all users.
 func ListUser() (users []*User, err error) {
 	rows, err := listQuery.Query()
 	if err != nil {
@@ -94,7 +94,7 @@ func ListUser() (users []*User, err error) {
 	return
 }
 
-// New inserts a new record into db.
+// NewUser inserts a new record into db.
 func NewUser(name, email, image string) (u *User, err error) {
 	res, err := insertQuery.Exec(name, email, image)
 	if err != nil {
@@ -109,7 +109,7 @@ func NewUser(name, email, image string) (u *User, err error) {
 	return &User{int(id), name, email, image}, nil
 }
 
-// Find a user from db by email.
+// FindUSer a user from db by email.
 func FindUser(email string) (u *User, err error) {
 	row := emailQuery.QueryRow(email)
 	var (
@@ -125,7 +125,7 @@ func FindUser(email string) (u *User, err error) {
 	return &User{id, name, email, image}, nil
 }
 
-// Load user record from db by id.
+// LoadUser user record from db by id.
 func LoadUser(id int) (u *User, err error) {
 	row := idQuery.QueryRow(id)
 	var (

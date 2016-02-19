@@ -24,6 +24,7 @@ func validEditor(cfg common.Config, u *model.User) bool {
 	return false
 }
 
+// Create hadles requests to create pad
 func (pc *Pad) Create(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
 	u, err := Me(pc.SF.Get(h.Request))
@@ -58,6 +59,7 @@ func (pc *Pad) Create(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res.Ok(resData).Do(w)
 }
 
+// Delete handles requests to delete a pad
 func (pc *Pad) Delete(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
 	u, err := Me(pc.SF.Get(h.Request))
@@ -98,6 +100,7 @@ func (pc *Pad) Delete(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res.Ok(nil).Do(w)
 }
 
+// Edit handles requests to edit a pad
 func (pc *Pad) Edit(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
 	u, err := Me(pc.SF.Get(h.Request))

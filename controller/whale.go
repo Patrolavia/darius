@@ -9,10 +9,12 @@ import (
 	"github.com/Patrolavia/jsonapi"
 )
 
+// Whale is super whale power
 type Whale struct {
 	SF common.SessionFactory
 }
 
+// Whale handles 404 page
 func (c *Whale) Whale(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
 	p := &model.PadContent{
@@ -24,7 +26,7 @@ func (c *Whale) Whale(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 		Content: `# What?
 Even a wise whale like Darius cannot understand your request.
 
-He don't have secret whale power.`,
+He doesn't have secret whale power.`,
 	}
 
 	cmd := exec.Command("fortune")

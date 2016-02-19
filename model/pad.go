@@ -21,6 +21,7 @@ type PadContent struct {
 	Version int    `json:"version"`
 }
 
+// VersionError denotes there are two or more users editing same pad
 type VersionError int
 
 func (e VersionError) Error() string {

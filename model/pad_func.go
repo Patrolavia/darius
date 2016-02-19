@@ -9,12 +9,12 @@ import (
 
 func html(title, content string) string {
 	buf := []byte(content)
-	html_opt := 0 |
+	htmlOpt := 0 |
 		bf.HTML_USE_SMARTYPANTS |
 		bf.HTML_SMARTYPANTS_FRACTIONS |
 		bf.HTML_SMARTYPANTS_LATEX_DASHES |
 		bf.HTML_FOOTNOTE_RETURN_LINKS
-	render := bf.HtmlRenderer(html_opt, title, "")
+	render := bf.HtmlRenderer(htmlOpt, title, "")
 	res := bf.MarkdownOptions(buf, render, bf.Options{
 		Extensions: 0 |
 			bf.EXTENSION_NO_INTRA_EMPHASIS |
@@ -33,7 +33,7 @@ func html(title, content string) string {
 	return string(res)
 }
 
-// New creates a new record in db, it uses transaction so you have to pass db connection to it.
+// NewPad creates a new record in db, it uses transaction so you have to pass db connection to it.
 func NewPad(db *sql.DB, uid int, title, content string, tags []string, coops []int) (pad *PadContent, err error) {
 	tx, err := db.Begin()
 	if err != nil {
@@ -85,7 +85,7 @@ func NewPad(db *sql.DB, uid int, title, content string, tags []string, coops []i
 	return
 }
 
-// Load record from db by id
+// LoadPad record from db by id
 func LoadPad(id int) (pad *PadContent, err error) {
 	row := loadPadQuery.QueryRow(id)
 	var (
@@ -194,10 +194,12 @@ func (pad *PadContent) Save(db *sql.DB) (err error) {
 	return
 }
 
+// Render markdown to html
 func (pad *PadContent) Render() {
 	pad.HTML = html(pad.Title, pad.Content)
 }
 
+// Delete pad from db, also delete related tags and cooperators
 func (pad *Pad) Delete(db *sql.DB) (err error) {
 	tx, err := db.Begin()
 	if err != nil {
@@ -227,11 +229,13 @@ func (pad *Pad) Delete(db *sql.DB) (err error) {
 	return
 }
 
+// CoopModified detectes is cooperator info is changed
 func (pad *Pad) CoopModified() bool {
 	a, b := pad.coopDiff()
 	return len(a) != 0 || len(b) != 0
 }
 
+// Sort cooperators and tags
 func (pad *Pad) Sort() {
 	sort.Sort(sort.IntSlice(pad.Cooperators))
 	sort.Sort(sort.StringSlice(pad.Tags))

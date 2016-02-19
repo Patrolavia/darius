@@ -11,7 +11,7 @@ import (
 
 var peAclUser, peAclCoop, peAclGuest *model.User
 var peAclPad *model.PadContent
-var peAclUri string
+var peAclURI string
 
 func init() {
 	var err error
@@ -35,7 +35,7 @@ func init() {
 		log.Fatalf("Cannot create pad for testing pad edit act: %s", err)
 	}
 
-	peAclUri = fmt.Sprintf("/api/edit/%d", peAclPad.ID)
+	peAclURI = fmt.Sprintf("/api/edit/%d", peAclPad.ID)
 }
 
 func TestPadEditAclNoLogin(t *testing.T) {
@@ -45,7 +45,7 @@ func TestPadEditAclNoLogin(t *testing.T) {
 		"tags":       peAclPad.Tags,
 		"cooperator": peAclPad.Cooperators,
 	}
-	resp, err := jsonapi.HandlerTest(pc().Edit).PostJSON(peAclUri, "", param)
+	resp, err := jsonapi.HandlerTest(pc().Edit).PostJSON(peAclURI, "", param)
 	if err != nil {
 		t.Fatalf("Error occured when testing edit ACL without login: %s", err)
 	}
@@ -72,7 +72,7 @@ func TestPadEditAclGuest(t *testing.T) {
 		"tags":       peAclPad.Tags,
 		"cooperator": peAclPad.Cooperators,
 	}
-	resp, err := jsonapi.HandlerTest(pc().Edit).PostJSON(peAclUri, sess.Cookie(), param)
+	resp, err := jsonapi.HandlerTest(pc().Edit).PostJSON(peAclURI, sess.Cookie(), param)
 	if err != nil {
 		t.Fatalf("Error occured when testing edit ACL with guest: %s", err)
 	}
@@ -100,7 +100,7 @@ func TestPadEditAclCoop(t *testing.T) {
 		"cooperator": []int{peAclCoop.ID + 1},
 		"version":    peAclPad.Version,
 	}
-	resp, err := jsonapi.HandlerTest(pc().Edit).PostJSON(peAclUri, sess.Cookie(), param)
+	resp, err := jsonapi.HandlerTest(pc().Edit).PostJSON(peAclURI, sess.Cookie(), param)
 	if err != nil {
 		t.Fatalf("Error occured when testing edit ACL with coop: %s", err)
 	}

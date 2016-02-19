@@ -31,7 +31,7 @@ func main() {
 		log.Fatalf("Cannot read data from %s: %s", jsonFile, err)
 	}
 
-	cfg, err := common.JsonConfig(data)
+	cfg, err := common.JSONConfig(data)
 	if err != nil {
 		log.Fatalf("Cannot read configuration: %s", err)
 	}

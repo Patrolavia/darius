@@ -19,6 +19,7 @@ type Static struct {
 	cache  *template.Template
 }
 
+// File handles static file requests
 func (s Static) File(w http.ResponseWriter, r *http.Request) {
 	if s.Config["FrontEnd"] == "" {
 		http.Error(w, "Internal server error", 500)

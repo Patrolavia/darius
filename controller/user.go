@@ -9,11 +9,13 @@ import (
 	"github.com/Patrolavia/jsonapi"
 )
 
+// User handles user related requests
 type User struct {
 	SF     common.SessionFactory
 	Config common.Config
 }
 
+// Users handles requests to list all users
 func (uc *User) Users(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
 	userList, err := model.ListUser()
@@ -26,6 +28,7 @@ func (uc *User) Users(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res.Ok(userList).Do(w)
 }
 
+// Me handles requsts to get current user info
 func (uc *User) Me(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
 	u, err := Me(uc.SF.Get(h.Request))
@@ -37,6 +40,7 @@ func (uc *User) Me(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res.Ok(u).Do(w)
 }
 
+// User handles requests to query some user's info
 func (uc *User) User(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
 	var args map[string]interface{}

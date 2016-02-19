@@ -11,7 +11,7 @@ import (
 
 var pdAclUser, pdAclCoop, pdAclGuest *model.User
 var pdAclPad *model.PadContent
-var pdAclUri string
+var pdAclURI string
 
 func init() {
 	var err error
@@ -35,11 +35,11 @@ func init() {
 		log.Fatalf("Cannot create pad for testing pad del act: %s", err)
 	}
 
-	pdAclUri = fmt.Sprintf("/api/delete/%d", pdAclPad.ID)
+	pdAclURI = fmt.Sprintf("/api/delete/%d", pdAclPad.ID)
 }
 
 func TestPadDelAclNoLogin(t *testing.T) {
-	resp, err := jsonapi.HandlerTest(pc().Delete).Get(pdAclUri, "")
+	resp, err := jsonapi.HandlerTest(pc().Delete).Get(pdAclURI, "")
 	if err != nil {
 		t.Fatalf("Error occured while testing pad delete ACL without login: %s", err)
 	}
@@ -64,7 +64,7 @@ func TestPadDelAclGuest(t *testing.T) {
 	if err := sess.Err(); err != nil {
 		t.Fatalf("Failed to login with guest when test delete ACL: %s", err)
 	}
-	resp, err := jsonapi.HandlerTest(pc().Delete).Get(pdAclUri, sess.Cookie())
+	resp, err := jsonapi.HandlerTest(pc().Delete).Get(pdAclURI, sess.Cookie())
 	if err != nil {
 		t.Fatalf("Error occured while testing pad delete ACL with guest: %s", err)
 	}
@@ -89,7 +89,7 @@ func TestPadDelAclCoop(t *testing.T) {
 	if err := sess.Err(); err != nil {
 		t.Fatalf("Failed to login with coop when test delete ACL: %s", err)
 	}
-	resp, err := jsonapi.HandlerTest(pc().Delete).Get(pdAclUri, sess.Cookie())
+	resp, err := jsonapi.HandlerTest(pc().Delete).Get(pdAclURI, sess.Cookie())
 	if err != nil {
 		t.Fatalf("Error occured while testing pad delete ACL with coop: %s", err)
 	}

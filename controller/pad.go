@@ -11,12 +11,14 @@ import (
 	"github.com/Patrolavia/jsonapi"
 )
 
+// Pad represents a mdpad document, a.k.a. pad
 type Pad struct {
 	DB     *sql.DB
 	SF     common.SessionFactory
 	Config common.Config
 }
 
+// View handles pad render request
 func (pc *Pad) View(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
 	path := h.Request.URL.Path
@@ -44,6 +46,7 @@ func (pc *Pad) View(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res.Ok(p).Do(w)
 }
 
+// List handles request to list all pads
 func (pc *Pad) List(w *json.Encoder, r *json.Decoder, h *jsonapi.HTTP) {
 	res := new(Response)
 	pads, err := model.ListPad()

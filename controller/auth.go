@@ -12,6 +12,7 @@ import (
 	plus "google.golang.org/api/plus/v1"
 )
 
+// Auth is controller handling auth requests
 type Auth struct {
 	GoogleConfig *oauth2.Config
 	SF           common.SessionFactory
@@ -20,10 +21,11 @@ type Auth struct {
 
 func (ac *Auth) googleConfig(r *http.Request) *oauth2.Config {
 	ret := *ac.GoogleConfig // create a copy
-	ret.RedirectURL = ac.Config.Url("/auth/google/oauth2callback")
+	ret.RedirectURL = ac.Config.URL("/auth/google/oauth2callback")
 	return &ret
 }
 
+// Google handles google oauth login request
 func (ac *Auth) Google(w http.ResponseWriter, r *http.Request) {
 	sess := ac.SF.Get(r)
 	stat := fmt.Sprint(rand.Int())
@@ -37,6 +39,7 @@ func (ac *Auth) Google(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 }
 
+// GoogleCallback is callback for google oauth
 func (ac *Auth) GoogleCallback(w http.ResponseWriter, r *http.Request) {
 	sess := ac.SF.Get(r)
 	stat := sess.Get("login_token")
@@ -56,7 +59,7 @@ func (ac *Auth) GoogleCallback(w http.ResponseWriter, r *http.Request) {
 	tok, err := conf.Exchange(oauth2.NoContext, code)
 	if err != nil {
 		common.Errorf(err, "Error occurs when exchanging token")
-		http.Redirect(w, r, ac.Config.Url("/"), http.StatusTemporaryRedirect)
+		http.Redirect(w, r, ac.Config.URL("/"), http.StatusTemporaryRedirect)
 		return
 	}
 	client := conf.Client(oauth2.NoContext, tok)
@@ -65,7 +68,7 @@ func (ac *Auth) GoogleCallback(w http.ResponseWriter, r *http.Request) {
 	me, err := p.People.Get("me").Do()
 	if err != nil {
 		common.Errorf(err, "Error occurs when getting user info")
-		http.Redirect(w, r, ac.Config.Url("/"), http.StatusTemporaryRedirect)
+		http.Redirect(w, r, ac.Config.URL("/"), http.StatusTemporaryRedirect)
 		return
 	}
 
@@ -96,9 +99,10 @@ func (ac *Auth) GoogleCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, ac.Config.Url("/"), http.StatusTemporaryRedirect)
+	http.Redirect(w, r, ac.Config.URL("/"), http.StatusTemporaryRedirect)
 }
 
+// Paths returns available login method to user
 func (ac *Auth) Paths(w http.ResponseWriter, r *http.Request) {
 	h := w.Header()
 	h["Content-Type"] = []string{"application/json"}
@@ -107,6 +111,7 @@ func (ac *Auth) Paths(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(path))
 }
 
+// Logout current user
 func (ac *Auth) Logout(w http.ResponseWriter, r *http.Request) {
 	sess := ac.SF.Get(r)
 	sess.Unset("uid")
@@ -114,5 +119,5 @@ func (ac *Auth) Logout(w http.ResponseWriter, r *http.Request) {
 	if err := sess.Err(); err != nil {
 		log.Printf("While user logout: %s", err)
 	}
-	http.Redirect(w, r, ac.Config.Url("/"), http.StatusTemporaryRedirect)
+	http.Redirect(w, r, ac.Config.URL("/"), http.StatusTemporaryRedirect)
 }
