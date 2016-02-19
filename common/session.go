@@ -50,7 +50,7 @@ func (f *sf) Get(r *http.Request) (session Session) {
 
 // Session is wrapper for github.com/gorilla/sessions
 //
-// It does not return error in method calls. Instead, you have to call Err() explictly to
+// It does not return error in method calls. Instead, you have to call Err() explicitly to
 // see if anything goes wrong in previous method calls.
 //
 //     sess.Set("key", "val")
